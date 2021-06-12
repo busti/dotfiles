@@ -7,6 +7,7 @@ in {
     # noncoreutils
     ripgrep nmap
     # applications
+    jetbrains.idea-community jetbrains.webstorm jetbrains.clion
     openscad prusa-slicer freecad
     dfeet qdirstat
   ];
