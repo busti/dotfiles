@@ -8,7 +8,7 @@ in {
     ripgrep nmap
     # applications
     jetbrains.idea-community jetbrains.webstorm jetbrains.clion
-    openscad prusa-slicer freecad
+    openscad prusa-slicer freecad kicad
     dfeet qdirstat
   ];
 
