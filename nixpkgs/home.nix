@@ -1,6 +1,8 @@
 {config, pkgs, ...}: let
   system = (import <nixpkgs/nixos> {}).config;
 in {
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = with pkgs; [
     # home-manager userspace install
     coreutils
