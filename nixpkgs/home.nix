@@ -9,7 +9,7 @@ in {
     # applications
     jetbrains.idea-community jetbrains.webstorm jetbrains.clion
     openscad prusa-slicer freecad kicad
-    dfeet qdirstat
+    dfeet qdirstat remmina
   ];
 
   programs = {
