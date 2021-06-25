@@ -4,7 +4,6 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    # home-manager userspace install
     coreutils
     # noncoreutils
     ripgrep nmap
