@@ -11,6 +11,8 @@ in {
     jetbrains.idea-community jetbrains.webstorm jetbrains.clion
     openscad prusa-slicer freecad kicad
     dfeet qdirstat remmina
+    # games
+    minecraft
   ];
 
   programs = {
