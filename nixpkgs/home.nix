@@ -13,7 +13,7 @@ in {
     dfeet qdirstat remmina
     spotify
     # games
-    minecraft
+    minecraft superTuxKart
   ];
 
   programs = {
