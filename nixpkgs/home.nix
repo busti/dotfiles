@@ -20,7 +20,7 @@
   wrapEnv = package: executable: additions: package.overrideAttrs (old@{fixupPhase ? "", ...}: let
     prefixes = lib.strings.concatMapStrings (pkg: ''--prefix PATH : "${pkg}/bin" \'' + "\n") additions;
   in {
-    fixupPhase = builtins.trace prefixes fixupPhase + ''
+    fixupPhase = fixupPhase + ''
       wrapProgram $out/bin/${executable} \
         ${prefixes}
     '';
@@ -33,7 +33,7 @@
 
   naIon = with pkgs; (wrapEnv
     jetbrains.clion "clion"
-    [gnumake cmake gcc clang nodejs]
+    [gnumake cmake gcc clang nodejs rustup rustc cargo rustfmt]
   );
 
   system = (import <nixpkgs/nixos> {}).config;
