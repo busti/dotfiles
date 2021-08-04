@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, lib, pkgs, ...}: let
   optimus_java_launcher = pkgs.writeShellScriptBin "minecraft_java_launcher" ''
     exec -a "$0" optirun /nix/store/p21v8k2jzmkvr2zlqpv1y11jrdsfm43w-openjdk-16+36/bin/java "$@"
   '';
@@ -17,20 +17,24 @@
     });
   };
 
-  insmellyj = with pkgs; jetbrains.idea-community.overrideAttrs (old@{fixupPhase ? "", ...}: {
-    fixupPhase = fixupPhase + ''
-      (
-        wrapProgram $out/bin/idea-community \
-          --prefix PATH : "${scala}/bin" \
-          --prefix PATH : "${sbt}/bin" \
-          --prefix PATH : "${erlang}/bin" \
-          --prefix PATH : "${elixir}/bin" \
-          --prefix PATH : "${nodejs}/bin" \
-          --prefix PATH : "${docker}/bin" \
-          --prefix PATH : "${docker-compose}/bin"
-      )
+  wrapEnv = package: executable: additions: package.overrideAttrs (old@{fixupPhase ? "", ...}: let
+    prefixes = lib.strings.concatMapStrings (pkg: ''--prefix PATH : "${pkg}/bin" \'' + "\n") additions;
+  in {
+    fixupPhase = builtins.trace prefixes fixupPhase + ''
+      wrapProgram $out/bin/${executable} \
+        ${prefixes}
     '';
   });
+
+  insmellyj = with pkgs; (wrapEnv
+    jetbrains.idea-community "idea-community"
+    [docker docker-compose scala sbt erlang elixir nodejs inotify-tools]
+  );
+
+  naIon = with pkgs; (wrapEnv
+    jetbrains.clion "clion"
+    [gnumake cmake gcc clang nodejs]
+  );
 
   system = (import <nixpkgs/nixos> {}).config;
 in {
@@ -41,7 +45,7 @@ in {
     # utils
     ripgrep nmap
     # applications
-    insmellyj jetbrains.webstorm jetbrains.clion
+    insmellyj naIon jetbrains.webstorm
     openscad prusa-slicer freecad kicad
     dfeet qdirstat remmina
     spotify
