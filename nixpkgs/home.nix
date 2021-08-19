@@ -27,31 +27,38 @@
   });
 
   insmellyj = with pkgs; (wrapEnv
-    jetbrains.idea-community "idea-community"
-    [docker docker-compose scala sbt erlang elixir nodejs inotify-tools]
+    jetbrains.idea-ultimate "idea-ultimate"
+    [glib docker docker-compose jdk16_headless scala sbt erlang elixir nodejs yarn inotify-tools]
   );
 
   naIon = with pkgs; (wrapEnv
     jetbrains.clion "clion"
-    [gnumake cmake gcc clang nodejs rustup rustc cargo rustfmt]
+    [glib gnumake cmake gcc clang nodejs nodePackages.webpack inotify-tools rustup wasm-pack trunk]
   );
 
   system = (import <nixpkgs/nixos> {}).config;
 in {
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = with pkgs; [
-    coreutils
-    # utils
-    ripgrep nmap
-    # applications
-    insmellyj naIon jetbrains.webstorm
-    openscad prusa-slicer freecad kicad
-    dfeet qdirstat remmina
-    spotify
-    # games
-    steam primecraft superTuxKart
-  ];
+  home = {
+    packages = with pkgs; [
+      coreutils
+      # utils
+      ripgrep nmap
+      wireguard
+      # applications
+      insmellyj naIon jetbrains.webstorm
+      openscad prusa-slicer freecad kicad
+      dfeet qdirstat remmina
+      spotify
+      # games
+      steam primecraft superTuxKart
+    ];
+
+    sessionVariables = {
+      LD_PRELOAD = "${pkgs.glibc}/bin";
+    };
+  };
 
   programs = {
     home-manager.enable = true;
