@@ -63,4 +63,11 @@ in {
   programs = {
     home-manager.enable = true;
   };
+
+  services = {
+    nextcloud-client = {
+      enable = true;
+      startInBackground = true;
+    };
+  };
 }
