@@ -42,11 +42,13 @@ in {
 
   home = {
     packages = with pkgs; [
+      # essentials
       coreutils
       # utils
       ripgrep nmap
       wireguard
       # applications
+      nextcloud-client
       insmellyj naIon jetbrains.webstorm
       openscad prusa-slicer freecad kicad
       dfeet qdirstat remmina
