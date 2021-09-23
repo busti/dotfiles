@@ -45,6 +45,7 @@ in {
       # essentials
       coreutils
       # utils
+      nixops niv
       ripgrep nmap
       wireguard
       # applications
@@ -59,6 +60,7 @@ in {
 
     sessionVariables = {
       LD_PRELOAD = "${pkgs.glibc}/bin";
+      NIXOPS_STATE = "$HOME/projects/infra";
     };
   };
 
