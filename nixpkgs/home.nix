@@ -45,7 +45,7 @@ in {
       # essentials
       coreutils
       # utils
-      nixops niv
+      niv
       ripgrep nmap
       wireguard
       # applications
