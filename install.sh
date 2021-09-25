@@ -8,7 +8,5 @@ script_dir=$(dirname $(readlink --canonicalize-existing $0))
   rm -rf $HOME/.config/nixpkgs/*
   ln -sdf $script_dir/nixpkgs/* $HOME/.config/nixpkgs/
 
-  nix-shell -E \
-    "with import <nixpkgs> {}; mkShell { buildInputs = [ (callPackage ./nixpkgs/packages/home-manager.nix {}) ]; }" \
-    --run "home-manager switch"
+  home-manager switch
 )
